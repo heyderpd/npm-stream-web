@@ -8,13 +8,13 @@ const _streamPromise = getPathFrom => (fileName, url) => {
     getPathFrom(fileName))
 }
 
-export const tryGetFromStreamList = (streamList, path = './download', prefix = 'vd', format = 'mp4') => {
+export const tryGetFromStreamList = async (streamList, path = './download', prefix = 'vd', format = 'mp4') => {
   const streamPromise = _streamPromise(
     getPathToFile(path, prefix, format))
 
   const promiseList = mapx(
     streamList,
-    (fileName, url) => streamPromise(fileName, url))
+    (url, fileName) => streamPromise(fileName, url))
   
   Promise
     .all(promiseList)
